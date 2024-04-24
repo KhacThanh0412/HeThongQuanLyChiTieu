@@ -1,12 +1,11 @@
 const mongoose = require('mongoose');
 
-const expensesSchema = new mongoose.Schema({
+const goalsSchema = new mongoose.Schema({
     user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     group_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Group' },
     category: String,
-    amount: Number,
-    date: Date,
-    description: String
+    target_amount: Number,
+    current_amount: Number
 });
 
-module.exports = mongoose.model('Expenses', expensesSchema);
+module.exports = mongoose.model('Goals', goalsSchema);
