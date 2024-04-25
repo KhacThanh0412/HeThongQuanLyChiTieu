@@ -3,17 +3,27 @@ const app = express();
 const dotenv = require("dotenv");
 const connectDB = require("./db/db");
 const authRoutes = require("./routes/UserRoute");
+const expenseRoutes = require("./routes/ExpensesRoute");
+const categoryRoutes = require("./routes/CategoriesRoute");
+const goalRoutes = require("./routes/GoalsRoute");
+const paymentRoutes = require("./routes/PaymentsRoute");
+const profileRoutes = require("./routes/ProfileRoute");
+const groupRoutes = require("./routes/GroupRoute");
 
 dotenv.config();
 
 // Kết nối tới cơ sở dữ liệu
 connectDB();
 
-// Sử dụng JSON middleware cho phân tích dữ liệu gửi đến từ client
 app.use(express.json());
 
-// Sử dụng route cho đăng nhập và đăng ký
 app.use("/api/auth", authRoutes);
+app.use("/api/expenses", expenseRoutes);
+app.use("/api/categories", categoryRoutes);
+app.use("/api/goals", goalRoutes);
+app.use("/api/payments", paymentRoutes);
+app.use("/api/profiles", profileRoutes);
+app.use("/api/groups", groupRoutes);
 
 const PORT = process.env.PORT || 3000;
 
