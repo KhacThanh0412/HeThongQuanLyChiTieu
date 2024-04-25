@@ -1,13 +1,13 @@
 const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
-const dbConnection = require("./db/db");
+const connectDB = require("./db/db");
 const authRoutes = require("./routes/UserRoute");
 
 dotenv.config();
 
 // Kết nối tới cơ sở dữ liệu
-dbConnection();
+connectDB();
 
 // Sử dụng JSON middleware cho phân tích dữ liệu gửi đến từ client
 app.use(express.json());
