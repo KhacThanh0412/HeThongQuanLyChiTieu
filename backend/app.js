@@ -3,12 +3,10 @@ const app = express();
 const dotenv = require("dotenv");
 const connectDB = require("./db/db");
 const authRoutes = require("./routes/UserRoute");
-const expenseRoutes = require("./routes/ExpensesRoute");
-const categoryRoutes = require("./routes/CategoriesRoute");
-const goalRoutes = require("./routes/GoalsRoute");
-const paymentRoutes = require("./routes/PaymentsRoute");
-const profileRoutes = require("./routes/ProfileRoute");
-const groupRoutes = require("./routes/GroupRoute");
+const incomeRoutes = require("./routes/IncomeRoute");
+const debtRoutes = require("./routes/DebtRoute");
+const expenditureRoutes = require("./routes/ExpendituresRoute");
+const plannedExpenditureRoutes = require("./routes/PlannedExpendituresRoute");
 
 dotenv.config();
 
@@ -18,12 +16,10 @@ connectDB();
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
-app.use("/api/expenses", expenseRoutes);
-app.use("/api/categories", categoryRoutes);
-app.use("/api/goals", goalRoutes);
-app.use("/api/payments", paymentRoutes);
-app.use("/api/profiles", profileRoutes);
-app.use("/api/groups", groupRoutes);
+app.use("/api/incomes", incomeRoutes);
+app.use("/api/debts", debtRoutes);
+app.use("/api/expenditures", expenditureRoutes);
+app.use("/api/plannedExpenditures", plannedExpenditureRoutes);
 
 const PORT = process.env.PORT || 3000;
 
