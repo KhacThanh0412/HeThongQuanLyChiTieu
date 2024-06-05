@@ -1,25 +1,63 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useMemo } from "react";
+import styled from "styled-components";
+import { MainLayout } from "./Styles/Layouts";
+import Orb from "./Components/Orb/Orb";
+import Navigation from "./Components/Navigation/Navigation";
+import Dashboard from "./Components/Dashboard/Dashboard";
+import Income from "./Components/Income/Income";
+import Expenses from "./Components/Expenses/Expenses";
+import { useGlobalContext } from "./Context/globalContext";
 
 function App() {
+  const [active, setActive] = useState(1);
+
+  const global = useGlobalContext();
+  console.log(global);
+
+  const displayData = () => {
+    switch (active) {
+      case 1:
+        return <Dashboard />;
+      case 2:
+        return <Dashboard />;
+      case 3:
+        return <Income />;
+      case 4:
+        return <Expenses />;
+      default:
+        return <Dashboard />;
+    }
+  };
+
+  const orbMemo = useMemo(() => {
+    return <Orb />;
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppStyled className="App">
+      {orbMemo}
+      <MainLayout>
+        <Navigation active={active} setActive={setActive} />
+        <main>{displayData()}</main>
+      </MainLayout>
+    </AppStyled>
   );
 }
+
+const AppStyled = styled.div`
+  height: 100vh;
+  position: relative;
+  main {
+    flex: 1;
+    background: rgba(252, 246, 249, 0.78);
+    border: 3px solid #ffffff;
+    backdrop-filter: blur(4.5px);
+    border-radius: 32px;
+    overflow-x: hidden;
+    &::-webkit-scrollbar {
+      width: 0;
+    }
+  }
+`;
 
 export default App;
