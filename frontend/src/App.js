@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import styled from "styled-components";
 import { MainLayout } from "./Styles/Layouts";
 import Orb from "./Components/Orb/Orb";
@@ -6,26 +6,40 @@ import Navigation from "./Components/Navigation/Navigation";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import Income from "./Components/Income/Income";
 import Expenses from "./Components/Expenses/Expenses";
+import Login from "./Components/Login/Login";
 import { useGlobalContext } from "./Context/globalContext";
 
 function App() {
   const [active, setActive] = useState(1);
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const global = useGlobalContext();
   console.log(global);
 
+  useEffect(() => {
+    // Kiểm tra xem người dùng đã đăng nhập hay chưa ở đây
+    const userLoggedIn = localStorage.getItem("userLoggedIn");
+    if (userLoggedIn) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   const displayData = () => {
-    switch (active) {
-      case 1:
-        return <Dashboard />;
-      case 2:
-        return <Dashboard />;
-      case 3:
-        return <Income />;
-      case 4:
-        return <Expenses />;
-      default:
-        return <Dashboard />;
+    if (isLoggedIn) {
+      switch (active) {
+        case 1:
+          return <Dashboard />;
+        case 2:
+          return <Dashboard />;
+        case 3:
+          return <Income />;
+        case 4:
+          return <Expenses />;
+        default:
+          return <Dashboard />;
+      }
+    } else {
+      // Nếu chưa đăng nhập, hiển thị form đăng nhập
+      return <Login onLogin={() => setIsLoggedIn(true)} />;
     }
   };
 
@@ -37,8 +51,14 @@ function App() {
     <AppStyled className="App">
       {orbMemo}
       <MainLayout>
-        <Navigation active={active} setActive={setActive} />
-        <main>{displayData()}</main>
+        {isLoggedIn ? (
+          <>
+            <Navigation active={active} setActive={setActive} />
+            <main>{displayData()}</main>
+          </>
+        ) : (
+          <Login onLogin={() => setIsLoggedIn(true)} onRegister={() => {}} />
+        )}
       </MainLayout>
     </AppStyled>
   );

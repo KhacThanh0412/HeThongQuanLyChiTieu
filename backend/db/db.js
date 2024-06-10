@@ -18,4 +18,4 @@ const connectDB = async () => {
   }
 };
 
-module.exports = connectDB; // Không cần đóng gói connectDB vào object nữa
+module.exports = connectDB;
