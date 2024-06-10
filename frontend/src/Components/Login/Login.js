@@ -62,38 +62,75 @@ function Login() {
 }
 
 const LoginFormStyled = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;  /* Chiều cao 100% của viewport */
+  width: 100vw;  /* Chiều rộng 100% của viewport */
+  background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+  padding: 20px;
+
   form {
+    background: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    max-width: 300px;
-    margin: 0 auto;
+    align-items: center;
+  }
+
+  h2 {
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  .success {
+    color: green;
+    margin-bottom: 20px;
   }
 
   .form-group {
-    margin-bottom: 15px;
+    width: 100%;
+    margin-bottom: 20px;
   }
 
   label {
+    display: block;
+    margin-bottom: 5px;
     font-weight: bold;
+    color: #555;
   }
 
   input {
-    padding: 8px;
-    margin-top: 5px;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s;
+  }
+
+  input:focus {
+    border-color: #007bff;
+    outline: none;
   }
 
   button {
-    padding: 10px;
-    background-color: #007bff;
-    color: #fff;
+    width: 100%;
+    padding: 12px;
     border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s;
   }
 
   button:hover {
     background-color: #0056b3;
-  }
 `;
 
 export default Login;
