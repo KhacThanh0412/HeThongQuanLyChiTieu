@@ -6,17 +6,18 @@ import Navigation from "./Components/Navigation/Navigation";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import Income from "./Components/Income/Income";
 import Expenses from "./Components/Expenses/Expenses";
-import Login from "./Components/Login/Login";
+import Register from "./Components/Register/Register";
+import Login from "./Components/Login/Login"; // Import Login Component
 import { useGlobalContext } from "./Context/globalContext";
 
 function App() {
   const [active, setActive] = useState(1);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showLoginForm, setShowLoginForm] = useState(true); // State to toggle between login and register form
   const global = useGlobalContext();
   console.log(global);
 
   useEffect(() => {
-    // Kiểm tra xem người dùng đã đăng nhập hay chưa ở đây
     const userLoggedIn = localStorage.getItem("userLoggedIn");
     if (userLoggedIn) {
       setIsLoggedIn(true);
@@ -38,8 +39,21 @@ function App() {
           return <Dashboard />;
       }
     } else {
-      // Nếu chưa đăng nhập, hiển thị form đăng nhập
-      return <Login onLogin={() => setIsLoggedIn(true)} />;
+      if (showLoginForm) {
+        return (
+          <Login
+            onLogin={() => setIsLoggedIn(true)}
+            toggleForm={() => setShowLoginForm(false)}
+          />
+        );
+      } else {
+        return (
+          <Register
+            onLogin={() => setShowLoginForm(true)}
+            toggleForm={() => setShowLoginForm(true)}
+          />
+        );
+      }
     }
   };
 
@@ -57,7 +71,7 @@ function App() {
             <main>{displayData()}</main>
           </>
         ) : (
-          <Login onLogin={() => setIsLoggedIn(true)} onRegister={() => {}} />
+          <div>{displayData()}</div>
         )}
       </MainLayout>
     </AppStyled>

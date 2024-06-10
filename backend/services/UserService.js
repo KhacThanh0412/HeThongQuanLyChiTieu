@@ -2,8 +2,8 @@
 const User = require("../models/UserModels");
 
 // Service function to find user by username
-exports.findUserByUsername = async (username) => {
-  return await User.findOne({ username });
+exports.findUserByUsername = async (email) => {
+  return await User.findOne({ email });
 };
 
 // Service function to create a new user
