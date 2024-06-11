@@ -5,37 +5,33 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function Login({ onLogin, toggleForm }) {
-  const { loginUser, setError } = useGlobalContext();
+function Register({ onLogin, toggleForm }) {
+  const { registerUser, setError, error } = useGlobalContext();
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [successMessage, setSuccessMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
 
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      // Thực hiện đăng nhập
-      await loginUser({ email, password });
-      // Kiểm tra trạng thái đăng nhập
-      const isLoggedIn = localStorage.getItem("userLoggedIn");
-      if (isLoggedIn) {
-        toast.success("Login successful! Redirecting to dashboard...");
-        setTimeout(() => {
-          onLogin();
-          navigate("/dashboard");
-        }, 2000);
-      } else {
-        // Trường hợp không đăng nhập thành công
-        toast.error("Invalid email or password. Please try again.");
+      const response = await registerUser({ username, email, password });
+      console.log("====>" + response.error);
+      if (response && response.error) {
+        toast.error("Lỗi sai rồi nè");
+        return;
       }
+      toast.success("Registration successful! Redirecting to login...");
+      setTimeout(() => {
+        toggleForm();
+      }, 2000);
     } catch (err) {
       console.log("Error:", err);
       console.log("Error response:", err.response);
       console.log("Error response data:", err.response?.data);
-      toast.error(err.response?.data?.error || "Login failed");
+      toast.error(err.response?.data?.error || "Lỗi nè");
       setError(err.response?.data?.error);
     }
   };
@@ -45,9 +41,19 @@ function Login({ onLogin, toggleForm }) {
   };
 
   return (
-    <LoginFormStyled>
-      <form onSubmit={handleLogin}>
-        <h2>Login</h2>
+    <RegisterFormStyled>
+      <form onSubmit={handleRegister}>
+        <h2>Register</h2>
+        <div className="form-group">
+          <label htmlFor="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+        </div>
         <div className="form-group">
           <label htmlFor="email">Email</label>
           <input
@@ -73,20 +79,20 @@ function Login({ onLogin, toggleForm }) {
             </button>
           </div>
         </div>
-        <button type="submit">Login</button>
+        <button type="submit">Register</button>
         <p>
-          Don't have an account?{" "}
+          Already have an account?{" "}
           <a href="#" onClick={toggleForm}>
-            Register here
+            Login here
           </a>
         </p>
       </form>
       <ToastContainer />
-    </LoginFormStyled>
+    </RegisterFormStyled>
   );
 }
 
-const LoginFormStyled = styled.div`
+const RegisterFormStyled = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -114,6 +120,11 @@ const LoginFormStyled = styled.div`
 
   .success {
     color: green;
+    margin-bottom: 20px;
+  }
+
+  .error {
+    color: red;
     margin-bottom: 20px;
   }
 
@@ -189,4 +200,4 @@ const LoginFormStyled = styled.div`
   }
 `;
 
-export default Login;
+export default Register;

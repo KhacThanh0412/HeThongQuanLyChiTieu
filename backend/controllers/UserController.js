@@ -6,7 +6,7 @@ exports.registerUser = async (req, res) => {
   try {
     const { username, email, password } = req.body;
     // Kiểm tra xem tên người dùng đã tồn tại chưa
-    const existingUser = await userService.findUserByUsername(username);
+    const existingUser = await userService.findUserByUsername(email);
     if (existingUser) {
       return res.status(400).json({ error: "Username already exists" });
     }

@@ -12,10 +12,23 @@ export const GlobalProvider = ({ children }) => {
 
   const registerUser = async (user) => {
     try {
+      // Lấy danh sách người dùng
+      const usersResponse = await axios.get(`${BASE_URL}auth/users`);
+      const users = usersResponse.data;
+
+      // Kiểm tra xem email đã tồn tại trong danh sách người dùng hay chưa
+      const emailExists = users.some((u) => u.email === user.email);
+      if (emailExists) {
+        return { error: "Email already exists" };
+      }
+
+      // Nếu email chưa tồn tại, tiến hành đăng ký người dùng mới
       await axios.post(`${BASE_URL}auth/register`, user);
-      getUsers();
+      getUsers(); // Lấy danh sách người dùng sau khi đăng ký thành công
+      return {}; // Trả về object trống nếu không có lỗi
     } catch (err) {
-      setError(err.response.data.error);
+      // Trả về lỗi nếu có lỗi xảy ra trong quá trình đăng ký
+      return { error: err.response?.data?.error || "Registration failed" };
     }
   };
 
