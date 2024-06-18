@@ -12,7 +12,6 @@ const userSchema = new mongoose.Schema({
   totalInDebtAmount: { type: Number, default: 0 },
   totalOutDebtAmount: { type: Number, default: 0 },
   dateTimeOfPocketMoneyUpdate: { type: Date, default: Date.now },
-  taxes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tax" }],
 });
 
 module.exports = mongoose.model("User", userSchema);
