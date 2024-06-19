@@ -3,68 +3,58 @@ import styled from "styled-components";
 import { useGlobalContext } from "../../Context/globalContext";
 import History from "../../History/History";
 import { InnerLayout } from "../../Styles/Layouts";
-import { dollar } from "../../Utils/Icons";
+import { vnd } from "../../Utils/Icons";
 import Chart from "../Chart/Chart";
 
 function Dashboard() {
-  const {
-    totalExpenses,
-    incomes,
-    expenses,
-    totalIncome,
-    totalBalance,
-    getIncomes,
-    getExpenses,
-  } = useGlobalContext();
+  const {incomes, totalIncome, getIncomes} = useGlobalContext()
 
   useEffect(() => {
     getIncomes();
-    getExpenses();
   }, []);
 
   return (
     <DashboardStyled>
       <InnerLayout>
-        <h1>All Transactions</h1>
+        <h1>Tất cả giao dịch</h1>
         <div className="stats-con">
           <div className="chart-con">
             <Chart />
             <div className="amount-con">
               <div className="income">
-                <h2>Total Income</h2>
+                <h3>Tổng thu nhập</h3>
                 <p>
-                  {dollar} {totalIncome()}
+                  {totalIncome()}{vnd}
                 </p>
               </div>
               <div className="expense">
-                <h2>Total Expense</h2>
+                <h3>Tổng chi phí</h3>
                 <p>
-                  {dollar} {totalExpenses()}
+                  KhacThanh
                 </p>
               </div>
               <div className="balance">
-                <h2>Total Balance</h2>
-                <p>
-                  {dollar} {totalBalance()}
-                </p>
+                <h3>Tổng số dư</h3>
               </div>
             </div>
           </div>
           <div className="history-con">
             <History />
-            <h2 className="salary-title">
-              Min <span>Salary</span>Max
-            </h2>
+            <h3 className="salary-title">
+              Tối thiểu <span>Lương</span>Tối đa
+            </h3>
             <div className="salary-item">
-              <p>${Math.min(...incomes.map((item) => item.amount))}</p>
-              <p>${Math.max(...incomes.map((item) => item.amount))}</p>
+              <p>
+                {Math.min(...incomes.map(item => item.amountReceived))}{vnd}
+              </p>
+              <p>
+                {Math.max(...incomes.map(item => item.amountReceived))}{vnd}
+              </p>
             </div>
-            <h2 className="salary-title">
-              Min <span>Expense</span>Max
-            </h2>
+            <h3 className="salary-title">
+              Tối thiểu <span>Chi phí</span>Tối đa
+            </h3>
             <div className="salary-item">
-              <p>${Math.min(...expenses.map((item) => item.amount))}</p>
-              <p>${Math.max(...expenses.map((item) => item.amount))}</p>
             </div>
           </div>
         </div>
@@ -99,7 +89,7 @@ const DashboardStyled = styled.div`
           border-radius: 20px;
           padding: 1rem;
           p {
-            font-size: 3.5rem;
+            font-size: 2.2rem;
             font-weight: 700;
           }
         }
@@ -113,7 +103,7 @@ const DashboardStyled = styled.div`
           p {
             color: var(--color-green);
             opacity: 0.6;
-            font-size: 4.5rem;
+            font-size: 2.5rem;
           }
         }
       }
@@ -121,7 +111,7 @@ const DashboardStyled = styled.div`
 
     .history-con {
       grid-column: 4 / -1;
-      h2 {
+      h3 {
         margin: 1rem 0;
         display: flex;
         align-items: center;

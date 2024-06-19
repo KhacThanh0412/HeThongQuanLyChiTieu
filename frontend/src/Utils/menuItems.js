@@ -3,25 +3,25 @@ import { dashboard, expenses, transactions, trend } from "../Utils/Icons";
 export const menuItems = [
   {
     id: 1,
-    title: "Dashboard",
+    title: "Trang chủ",
     icon: dashboard,
     link: "/dashboard",
   },
   {
     id: 2,
-    title: "View Transactions",
+    title: "Xem giao dịch",
     icon: transactions,
     link: "/dashboard",
   },
   {
     id: 3,
-    title: "Incomes",
+    title: "Thu nhập",
     icon: trend,
     link: "/dashboard",
   },
   {
     id: 4,
-    title: "Expenses",
+    title: "Hoá đơn",
     icon: expenses,
     link: "/dashboard",
   },

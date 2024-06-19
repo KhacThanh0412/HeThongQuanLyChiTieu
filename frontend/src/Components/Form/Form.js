@@ -10,13 +10,13 @@ function Form() {
   const { addIncome, getIncomes, error, setError } = useGlobalContext();
   const [inputState, setInputState] = useState({
     title: "",
-    amount: "",
-    date: "",
-    category: "",
-    description: "",
+    amountReceived: "",
+    dateReceived: "",
+    typeReceviced: "",
+    reason: "",
   });
 
-  const { title, amount, date, category, description } = inputState;
+  const { title, amountReceived, dateReceived, typeReceviced, reason } = inputState;
 
   const handleInput = (name) => (e) => {
     setInputState({ ...inputState, [name]: e.target.value });
@@ -25,14 +25,18 @@ function Form() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addIncome(inputState);
-    setInputState({
-      title: "",
-      amount: "",
-      date: "",
-      category: "",
-      description: "",
-    });
+    if (title && amountReceived && dateReceived && typeReceviced) {
+      addIncome(inputState);
+      setInputState({
+        title: "",
+        amountReceived: "",
+        dateReceived: "",
+        typeReceviced: "",
+        reason: "",
+      });
+    } else {
+      setError("Vui lòng điền đầy đủ các trường bắt buộc.");
+    }
   };
 
   return (
@@ -43,65 +47,60 @@ function Form() {
           type="text"
           value={title}
           name={"title"}
-          placeholder="Salary Title"
+          placeholder="Tiêu đề"
           onChange={handleInput("title")}
         />
       </div>
       <div className="input-control">
         <input
-          value={amount}
+          value={amountReceived}
           type="text"
-          name={"amount"}
-          placeholder={"Salary Amount"}
-          onChange={handleInput("amount")}
+          name={"amountReceived"}
+          placeholder={"Số tiền"}
+          onChange={handleInput("amountReceived")}
         />
       </div>
       <div className="input-control">
         <DatePicker
-          id="date"
-          placeholderText="Enter A Date"
-          selected={date}
+          id="dateReceived"
+          placeholderText="Ngày"
+          selected={dateReceived}
           dateFormat="dd/MM/yyyy"
-          onChange={(date) => {
-            setInputState({ ...inputState, date: date });
+          onChange={(dateReceived) => {
+            setInputState({ ...inputState, dateReceived: dateReceived.toISOString() });
           }}
         />
       </div>
       <div className="selects input-control">
         <select
           required
-          value={category}
-          name="category"
-          id="category"
-          onChange={handleInput("category")}
+          value={typeReceviced}
+          name="typeReceviced"
+          id="typeReceviced"
+          onChange={handleInput("typeReceviced")}
         >
           <option value="" disabled>
-            Select Option
+            Chọn
           </option>
-          <option value="salary">Salary</option>
-          <option value="freelancing">Freelancing</option>
-          <option value="investments">Investiments</option>
-          <option value="stocks">Stocks</option>
-          <option value="bitcoin">Bitcoin</option>
-          <option value="bank">Bank Transfer</option>
-          <option value="youtube">Youtube</option>
-          <option value="other">Other</option>
+          <option value="Lương">Lương</option>
+          <option value="Thu nhập ngoài">Thu nhập ngoài</option>
+          <option value="Khác">Khác</option>
         </select>
       </div>
       <div className="input-control">
         <textarea
-          name="description"
-          value={description}
-          placeholder="Add A Reference"
-          id="description"
+          name="reason"
+          value={reason}
+          placeholder="Mô tả"
+          id="reason"
           cols="30"
           rows="4"
-          onChange={handleInput("description")}
+          onChange={handleInput("reason")}
         ></textarea>
       </div>
       <div className="submit-btn">
         <Button
-          name={"Add Income"}
+          name={"Thêm thu nhập"}
           icon={plus}
           bPad={".8rem 1.6rem"}
           bRad={"30px"}

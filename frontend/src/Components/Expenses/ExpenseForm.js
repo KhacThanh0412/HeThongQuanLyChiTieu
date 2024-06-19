@@ -7,16 +7,16 @@ import Button from "../Button/Button";
 import { plus } from "../../Utils/Icons";
 
 function ExpenseForm() {
-  const { addExpense, error, setError } = useGlobalContext();
+  const { addExpenditure, error, setError } = useGlobalContext();
   const [inputState, setInputState] = useState({
-    title: "",
-    amount: "",
-    date: "",
+    reason: "",
+    amountSpent: "",
+    dateSpent: "",
     category: "",
     description: "",
   });
 
-  const { title, amount, date, category, description } = inputState;
+  const { reason, amountSpent, dateSpent, category, description } = inputState;
 
   const handleInput = (name) => (e) => {
     setInputState({ ...inputState, [name]: e.target.value });
@@ -25,11 +25,11 @@ function ExpenseForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addExpense(inputState);
+    addExpenditure(inputState);
     setInputState({
-      title: "",
-      amount: "",
-      date: "",
+      reason: "",
+      amountSpent: "",
+      dateSpent: "",
       category: "",
       description: "",
     });
@@ -41,29 +41,29 @@ function ExpenseForm() {
       <div className="input-control">
         <input
           type="text"
-          value={title}
-          name={"title"}
-          placeholder="Expense Title"
-          onChange={handleInput("title")}
+          value={reason}
+          name={"reason"}
+          placeholder="Tiêu đề"
+          onChange={handleInput("reason")}
         />
       </div>
       <div className="input-control">
         <input
-          value={amount}
-          type="text"
-          name={"amount"}
-          placeholder={"Expense Amount"}
-          onChange={handleInput("amount")}
+          value={amountSpent}
+          type="number"
+          name={"amountSpent"}
+          placeholder={"Số tiền"}
+          onChange={handleInput("amountSpent")}
         />
       </div>
       <div className="input-control">
         <DatePicker
-          id="date"
-          placeholderText="Enter A Date"
-          selected={date}
+          id="dateSpent"
+          placeholderText="Ngày"
+          selected={dateSpent}
           dateFormat="dd/MM/yyyy"
-          onChange={(date) => {
-            setInputState({ ...inputState, date: date });
+          onChange={(dateSpent) => {
+            setInputState({ ...inputState, dateSpent: dateSpent });
           }}
         />
       </div>
@@ -76,7 +76,7 @@ function ExpenseForm() {
           onChange={handleInput("category")}
         >
           <option value="" disabled>
-            Select Option
+            Loại hoá đơn
           </option>
           <option value="education">Education</option>
           <option value="groceries">Groceries</option>
@@ -92,7 +92,7 @@ function ExpenseForm() {
         <textarea
           name="description"
           value={description}
-          placeholder="Add A Reference"
+          placeholder="Mô tả"
           id="description"
           cols="30"
           rows="4"
@@ -101,7 +101,7 @@ function ExpenseForm() {
       </div>
       <div className="submit-btn">
         <Button
-          name={"Add Expense"}
+          name={"Thêm hoá đơn"}
           icon={plus}
           bPad={".8rem 1.6rem"}
           bRad={"30px"}

@@ -14,8 +14,7 @@ function App() {
   const [active, setActive] = useState(1);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showLoginForm, setShowLoginForm] = useState(true); // State to toggle between login and register form
-  const global = useGlobalContext();
-  console.log(global);
+  const { currentUser } = useGlobalContext();
 
   useEffect(() => {
     const userLoggedIn = localStorage.getItem("userLoggedIn");
@@ -23,7 +22,7 @@ function App() {
       setIsLoggedIn(true);
     }
   }, []);
-
+  
   const displayData = () => {
     if (isLoggedIn) {
       switch (active) {
@@ -67,7 +66,7 @@ function App() {
       <MainLayout>
         {isLoggedIn ? (
           <>
-            <Navigation active={active} setActive={setActive} />
+            <Navigation active={active} setActive={setActive} currentUser={currentUser}/>
             <main>{displayData()}</main>
           </>
         ) : (

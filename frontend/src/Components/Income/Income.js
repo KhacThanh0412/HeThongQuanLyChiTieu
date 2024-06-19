@@ -15,9 +15,9 @@ function Income() {
   return (
     <IncomeStyled>
       <InnerLayout>
-        <h1>Incomes</h1>
+        <h1>Thu nhập</h1>
         <h2 className="total-income">
-          Total Income: <span>${totalIncome()}</span>
+          Tổng thu nhập: <span>{totalIncome()}</span>
         </h2>
         <div className="income-content">
           <div className="form-container">
@@ -25,18 +25,18 @@ function Income() {
           </div>
           <div className="incomes">
             {incomes.map((income) => {
-              const { _id, title, amount, date, category, description, type } =
+              const { _id, title, amountReceived, dateReceived, typeReceviced, reason, type } =
                 income;
               return (
                 <IncomeItem
                   key={_id}
                   id={_id}
                   title={title}
-                  description={description}
-                  amount={amount}
-                  date={date}
+                  reason={reason}
+                  amountReceived={amountReceived}
+                  dateReceived={dateReceived}
                   type={type}
-                  category={category}
+                  typeReceviced={typeReceviced}
                   indicatorColor="var(--color-green)"
                   deleteItem={deleteIncome}
                 />

@@ -17,9 +17,7 @@ function Login({ onLogin, toggleForm }) {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      // Thực hiện đăng nhập
-      await loginUser({ email, password });
-      // Kiểm tra trạng thái đăng nhập
+      const response = await loginUser({ email, password });
       const isLoggedIn = localStorage.getItem("userLoggedIn");
       if (isLoggedIn) {
         toast.success("Login successful! Redirecting to dashboard...");
@@ -28,13 +26,9 @@ function Login({ onLogin, toggleForm }) {
           navigate("/dashboard");
         }, 2000);
       } else {
-        // Trường hợp không đăng nhập thành công
         toast.error("Invalid email or password. Please try again.");
       }
     } catch (err) {
-      console.log("Error:", err);
-      console.log("Error response:", err.response);
-      console.log("Error response data:", err.response?.data);
       toast.error(err.response?.data?.error || "Login failed");
       setError(err.response?.data?.error);
     }

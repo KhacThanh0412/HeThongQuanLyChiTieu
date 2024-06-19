@@ -27,7 +27,7 @@ import Button from "../Button/Button";
 function IncomeItem({
   id,
   title,
-  amount,
+  amountReceived,
   date,
   category,
   description,
@@ -93,7 +93,7 @@ function IncomeItem({
         <div className="inner-content">
           <div className="text">
             <p>
-              {dollar} {amount}
+              {dollar} {amountReceived}
             </p>
             <p>
               {calender} {dateFormat(date)}

@@ -7,25 +7,19 @@ import IncomeItem from "../IncomeItem/IncomeItem";
 import ExpenseForm from "./ExpenseForm";
 
 function Expenses() {
-  const { addIncome, expenses, getExpenses, deleteExpense, totalExpenses } =
-    useGlobalContext();
-
-  useEffect(() => {
-    getExpenses();
-  }, []);
   return (
     <ExpenseStyled>
       <InnerLayout>
-        <h1>Expenses</h1>
+        <h1>Hoá đơn</h1>
         <h2 className="total-income">
-          Total Expense: <span>${totalExpenses()}</span>
+          Tổng hoá đơn: <span></span>
         </h2>
         <div className="income-content">
           <div className="form-container">
             <ExpenseForm />
           </div>
           <div className="incomes">
-            {expenses.map((income) => {
+            {/* {expenses.map((income) => {
               const { _id, title, amount, date, category, description, type } =
                 income;
               console.log(income);
@@ -43,7 +37,7 @@ function Expenses() {
                   deleteItem={deleteExpense}
                 />
               );
-            })}
+            })} */}
           </div>
         </div>
       </InnerLayout>
